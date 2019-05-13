@@ -10,11 +10,11 @@ import operator
 from multiprocessing import Pool
 
 ### Compute a batch in parallel
-def ptva_li(graph, obs_time, sigma, mu) :
-
-    est_ranked = [[]]
+def ptva_li(graph, obs_time, distribution) :
 
     source = 3
+    mu = distribution.mean()
+    sigma = distribution.std()
     ### Preprocess the graph (computes edge weights, shortest paths & lengths, checks if graph is a tree)
     graph, is_tree, paths, path_lengths = se.preprocess(list(obs_time.keys()), sigma, mu, graph)
 
@@ -24,10 +24,7 @@ def ptva_li(graph, obs_time, sigma, mu) :
 
     ranked = sorted(likelihoods.items(), key=operator.itemgetter(1), reverse=True)
 
-    result[0].append(s_est)
-    result[1].append(ranked)
-
-    return est_ranked
+    return (s_est, ranked)
 
 
 
