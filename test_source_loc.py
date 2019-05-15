@@ -2,9 +2,7 @@ import networkx as nx
 import numpy as np
 import sys
 
-import diffusion as diff
 import source_estimation as se
-import source_est_tools as tl
 import operator
 
 from multiprocessing import Pool
@@ -15,8 +13,6 @@ def ptva_li(graph, obs_time, distribution) :
     source = 3
     mu = distribution.mean()
     sigma = distribution.std()
-    ### Preprocess the graph (computes edge weights, shortest paths & lengths, checks if graph is a tree)
-    graph, is_tree, paths, path_lengths = se.preprocess(list(obs_time.keys()), sigma, mu, graph)
 
     ### Run the estimation
     s_est, likelihoods, d_mu, cov = se.ml_estimate(graph, obs_time, sigma, mu, paths,
