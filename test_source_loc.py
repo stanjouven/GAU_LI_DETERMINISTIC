@@ -6,11 +6,14 @@ import PTVA_LI.source_estimation as se
 import operator
 
 from multiprocessing import Pool
+from termcolor import colored
 
 ### Compute a batch in parallel
 def ptva_li(graph, obs_time, distribution) :
 
-    source = 3
+    print(colored('obs time', 'cyan'), obs_time)
+    print(colored('distribution', 'cyan'), distribution)
+
     mu = distribution.mean()
     sigma = distribution.std()
     obs = np.array(list(obs_time.keys()))
