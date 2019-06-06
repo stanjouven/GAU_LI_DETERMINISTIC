@@ -11,9 +11,6 @@ from termcolor import colored
 ### Compute a batch in parallel
 def ptva_li(graph, obs_time, distribution) :
 
-    print(colored('obs time', 'cyan'), obs_time)
-    print(colored('distribution', 'cyan'), distribution)
-
     mu = distribution.mean()
     sigma = distribution.std()
     obs = np.array(list(obs_time.keys()))
