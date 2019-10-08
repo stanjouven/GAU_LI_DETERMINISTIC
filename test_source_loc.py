@@ -19,11 +19,6 @@ def ptva_li(graph, obs_time, distribution) :
     paths = {}
     for o in obs:
         path_lengths[o], paths[o] = nx.single_source_dijkstra(graph, o)
-        print('path_lengths', o, ' = ', len(path_lengths[o]))
-        print('nodes', len(list(graph.nodes())))
-        print('path_lengths tab', sorted(path_lengths[o].items(), key=operator.itemgetter(0), reverse=True))
-        #print('mean', np.min(path_lengths[o]))
-        print('OBS', len(obs))
     ### Run the estimation
     s_est, likelihoods, d_mu, cov = se.ml_estimate(graph, obs_time, sigma, mu, paths,
         path_lengths)
