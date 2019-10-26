@@ -14,6 +14,10 @@ def ptva_li(graph, obs_time, distribution) :
     sigma = distribution.std()
     obs = np.array(list(obs_time.keys()))
 
+    print('mu ', mu)
+    print('sigma ', sigma)
+    print('obs ', obs)
+
     path_lengths = {}
     paths = {}
     for o in obs:
