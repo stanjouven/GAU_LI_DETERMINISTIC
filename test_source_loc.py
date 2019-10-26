@@ -10,13 +10,13 @@ from termcolor import colored
 
 ### Compute a batch in parallel
 def ptva_li(graph, obs_time, distribution) :
-    mu = distribution.mean(a = 0, b = np.inf)
-    sigma = distribution.std(0, np.inf)
+    mu = 3#distribution.mean(a = 0, b = np.inf)
+    sigma = 1#distribution.std(0, np.inf)
     obs = np.array(list(obs_time.keys()))
 
-    print('mu ', mu)
-    print('sigma ', sigma)
-    print('obs ', obs)
+    #print('mu ', mu)
+    #print('sigma ', sigma)
+    #print('obs ', obs)
 
     path_lengths = {}
     paths = {}
