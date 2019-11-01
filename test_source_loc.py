@@ -10,8 +10,8 @@ from termcolor import colored
 
 ### Compute a batch in parallel
 def ptva_li(graph, obs_time, distribution) :
-    mu = 3#distribution.mean(a = 0, b = np.inf)
-    sigma = 1#distribution.std(0, np.inf)
+    mu = distribution.mean()
+    sigma = distribution.std()
     obs = np.array(list(obs_time.keys()))
 
     #print('mu ', mu)
