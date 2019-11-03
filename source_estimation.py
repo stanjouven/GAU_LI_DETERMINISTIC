@@ -49,6 +49,7 @@ def ml_estimate(graph, obs_time, sigma, mu, paths, path_lengths,
 
     ### Computes classes of nodes with same position with respect to all observers
     classes = tl.classes(path_lengths, sorted_obs)
+    print('OBS ', len(sorted_obs))
 
     ### Iteration over all nodes per class
     #   nodes from same class will be attributed the average of their likelihoods
