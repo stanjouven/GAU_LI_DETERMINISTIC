@@ -65,6 +65,7 @@ def ml_estimate(graph, obs_time, sigma, mu, paths, path_lengths,
                 cov_d_s = (sigma**2)*cov_d_s
                 ### Mean vector
                 mu_s = tl.mu_vector_s(paths, s, sorted_obs)
+                print('SHAPE ', np.array(mu_s).shape)
                 mu_s = mu*mu_s
                 ### Computes log-probability of the source being the real source
                 likelihood, tmp = logLH_source_tree(mu_s, cov_d_s, sorted_obs, obs_time)
