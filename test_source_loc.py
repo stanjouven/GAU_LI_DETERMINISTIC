@@ -2,14 +2,14 @@ import networkx as nx
 import numpy as np
 import sys
 
-import PTVA_LI.source_estimation as se
+import PTVA_LI_DETERMINISTIC.source_estimation as se
 import operator
 
 from multiprocessing import Pool
 from termcolor import colored
 
 ### Compute a batch in parallel
-def ptva_li(graph, obs_time, distribution) :
+def ptva_li_deterministic(graph, obs_time, distribution) :
     mu = distribution.mean()
     sigma = distribution.std()
     obs = np.array(list(obs_time.keys()))
