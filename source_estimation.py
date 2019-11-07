@@ -13,7 +13,7 @@ node.
 import math
 import networkx as nx
 import numpy as np
-import PTVA_LI_DETERMINISTIC.source_est_tools as tl
+import PTVA_LI_DETERMINIST.source_est_tools as tl
 import operator
 import collections
 
@@ -49,7 +49,6 @@ def ml_estimate(graph, obs_time, sigma, mu, paths, path_lengths,
 
     ### Computes classes of nodes with same position with respect to all observers
     classes = tl.classes(path_lengths, sorted_obs)
-    print('OBS ', len(sorted_obs))
 
     ### Iteration over all nodes per class
     #   nodes from same class will be attributed the average of their likelihoods
@@ -67,6 +66,7 @@ def ml_estimate(graph, obs_time, sigma, mu, paths, path_lengths,
                 ### Mean vector
                 mu_s = tl.mu_vector_s(paths, s, sorted_obs)
                 mu_s = mu*mu_s
+                print('MU_S ', mu_s)
                 ### Computes log-probability of the source being the real source
                 likelihood, tmp = logLH_source_tree(mu_s, cov_d_s, sorted_obs, obs_time)
                 tmp_lkl.append(likelihood)
