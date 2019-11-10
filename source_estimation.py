@@ -56,7 +56,8 @@ def ml_estimate(graph, obs_time, sigma, mu, paths, path_lengths,
     #for c in classes:
 
     #    tmp_lkl = [] # Used to compute mean of likelihoods of same class
-    for s in c:
+    #for s in c:
+    for s in nodes:
         if path_lengths[o1][s] < max_dist:
             ### BFS tree
             tree_s = likelihood_tree(paths, s, sorted_obs)
