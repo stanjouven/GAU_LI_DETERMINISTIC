@@ -110,7 +110,7 @@ def filter_diffusion_data(infected, obs, max_obs=np.inf):
 # ---------------------------- Equivalence classes
 
 def classes(path_length, sorted_obs):
-    """Computes the equivalenc classes among all the graph nodes with
+    """Computes the equivalence classes among all the graph nodes with
     respect to their distance to all observers in the graph
 
     INPUT:
