@@ -27,7 +27,7 @@ def ptva_li_deterministic(graph, obs_time, distribution) :
         path_lengths)
 
     ranked = sorted(likelihoods.items(), key=operator.itemgetter(1), reverse=True)
-
+    print('ranked ', ranked)
     return (s_est, ranked)
 
 
