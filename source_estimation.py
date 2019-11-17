@@ -83,6 +83,8 @@ def ml_estimate(graph, obs_time, sigma, mu, paths, path_lengths,
     ### Find the nodes with maximum loglikelihood and return the nodes
     # with maximum a posteriori likelihood
 
+    print('log_likelohood ', sorted(loglikelihood.items(), key=operator.itemgetter(1), reverse=True))
+
     ### Corrects a bias
     posterior = posterior_from_logLH(loglikelihood)
 
