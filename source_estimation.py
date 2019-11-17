@@ -58,7 +58,6 @@ def ml_estimate(graph, obs_time, sigma, mu, paths, path_lengths,
             mu_s = mu*mu_s
             ### Computes log-probability of the source being the real source
             likelihood, tmp = logLH_source_tree(mu_s, cov_d_s, sorted_obs, obs_time)
-            tmp_lkl.append(likelihood)
 
             loglikelihood[s] = likelihood
 
