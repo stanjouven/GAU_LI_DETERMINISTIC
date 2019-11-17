@@ -74,7 +74,6 @@ def ml_estimate(graph, obs_time, sigma, mu, paths, path_lengths,
                 d_mu[s] = tmp
                 covariance[s] = cov_d_s
                 loglikelihood[s] = likelihood
-                print('likelihood ', likelihood)
             ### If the class was not empty
             if len(tmp_lkl)>0:
                 for s in c:
@@ -82,8 +81,6 @@ def ml_estimate(graph, obs_time, sigma, mu, paths, path_lengths,
 
     ### Find the nodes with maximum loglikelihood and return the nodes
     # with maximum a posteriori likelihood
-
-    print('log_likelohood ', sorted(loglikelihood.items(), key=operator.itemgetter(1), reverse=True))
 
     ### Corrects a bias
     posterior = posterior_from_logLH(loglikelihood)
