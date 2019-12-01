@@ -38,10 +38,6 @@ def ml_estimate(graph, obs_time, sigma, mu, paths, path_lengths,
     nodes = np.array(list(graph.nodes))
     loglikelihood = {n: -np.inf for n in nodes}
 
-    ### Print variables to be given to output to communicate intermediate results
-    d_mu = collections.defaultdict(list)
-    covariance = collections.defaultdict(list)
-
     ### Computes classes of nodes with same position with respect to all observers
     classes = tl.classes(path_lengths, sorted_obs)
 
@@ -65,17 +61,10 @@ def ml_estimate(graph, obs_time, sigma, mu, paths, path_lengths,
                 likelihood, tmp = logLH_source_tree(mu_s, cov_d_s, sorted_obs, obs_time)
                 tmp_lkl.append(likelihood)
 
-                ## Save print values
-                d_mu[s] = tmp
-                covariance[s] = cov_d_s
-
         ### If the class was not empty
         if len(tmp_lkl)>0:
             for s in c:
-                loglikelihood[s] = np.mean(tmp_lkl)
-                if len(tmp_lkl)>1:
-                    print('class------- ', tmp_lkl)
-
+                loglikelihood[s] = tmp_lkl[0]
 
     ### Find the nodes with maximum loglikelihood and return the nodes
     # with maximum a posteriori likelihood
@@ -87,7 +76,7 @@ def ml_estimate(graph, obs_time, sigma, mu, paths, path_lengths,
     source_candidates = list()
     ### Finds nodes with maximum likelihood
     for src, value in posterior.items():
-        if np.isclose(value, max_lkl, atol= 1e-08):
+        if np.isclose(value, max_lkl, atol= 1e-16):
             source_candidates.append(src)
 
     return source_candidates, posterior
