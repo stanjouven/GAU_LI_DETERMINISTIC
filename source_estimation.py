@@ -68,11 +68,14 @@ def ml_estimate(graph, obs_time, sigma, mu, paths, path_lengths,
                 ## Save print values
                 d_mu[s] = tmp
                 covariance[s] = cov_d_s
-                print('class--------- ', likelihood)
+
         ### If the class was not empty
         if len(tmp_lkl)>0:
             for s in c:
                 loglikelihood[s] = np.mean(tmp_lkl)
+                if len(tmp_lkl)>1:
+                    print('class------- ', tmp_lkl)
+
 
     ### Find the nodes with maximum loglikelihood and return the nodes
     # with maximum a posteriori likelihood
@@ -87,7 +90,7 @@ def ml_estimate(graph, obs_time, sigma, mu, paths, path_lengths,
         if np.isclose(value, max_lkl, atol= 1e-08):
             source_candidates.append(src)
 
-    return source_candidates, posterior, d_mu, covariance
+    return source_candidates, posterior
 
 #################################################### Helper methods for ml algo
 def posterior_from_logLH(loglikelihood):
