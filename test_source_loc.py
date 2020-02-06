@@ -20,11 +20,9 @@ def ptva_li_deterministic(graph, obs_time, distribution) :
     for o in obs:
         path_lengths[o], paths[o] = nx.single_source_dijkstra(graph, o)
     ### Run the estimation
-    s_est, likelihoods = se.ml_estimate(graph, obs_time, sigma, mu, paths, path_lengths)
+    s_est, scores = se.ml_estimate(graph, obs_time, sigma, mu, paths, path_lengths)
 
-
-    ranked = sorted(likelihoods.items(), key=operator.itemgetter(1), reverse=True)
-    return (s_est, ranked)
+    return (s_est, scores)
 
 
 
