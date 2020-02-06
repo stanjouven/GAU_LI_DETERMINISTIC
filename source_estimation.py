@@ -73,7 +73,7 @@ def ml_estimate(graph, obs_time, sigma, mu, paths, path_lengths,
     posterior = posterior_from_logLH(loglikelihood)
 
     scores = sorted(posterior.items(), key=operator.itemgetter(1), reverse=True)
-    source_candidate = list(scores.keys())[0]
+    source_candidate = scores[0][0]
 
     return source_candidate, scores
 
