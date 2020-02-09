@@ -34,7 +34,8 @@ def ml_estimate(graph, obs_time, sigma, mu, paths, path_lengths,
     sorted_obs = [x[0] for x in sorted_obs]
     o1 = min(obs_time, key=obs_time.get)
     ref_obs = sorted_obs[0]
-
+    print('o1', o1)
+    print('ref_obs', ref_obs)
     ### Gets the nodes of the graph and initializes likelihood
     nodes = np.array(list(graph.nodes))
     loglikelihood = {n: -np.inf for n in nodes}
