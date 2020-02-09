@@ -55,7 +55,7 @@ def cov_mat(tree, graph, paths, obs, ref_obs):
     bfs_tree_paths = {}
     undirected_tree = tree.to_undirected()
     for o in obs[1:]:
-        if not(verif_existant_path(list(tree.edges), paths[ref_obs[o])) :
+        if not(verif_existant_path(list(tree.edges), paths[ref_obs][o])) :
             bfs_tree_paths[o] = nx.shortest_path(undirected_tree, ref_obs, o)
         else:
             bfs_tree_paths[o] = paths[ref_obs][o]
