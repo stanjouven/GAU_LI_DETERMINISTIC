@@ -32,10 +32,8 @@ def ml_estimate(graph, obs_time, sigma, mu, paths, path_lengths,
     ### Gets the sorted observers and the referential observer (closest one)
     sorted_obs = sorted(obs_time.items(), key=operator.itemgetter(1))
     sorted_obs = [x[0] for x in sorted_obs]
-    o1 = min(obs_time, key=obs_time.get)
     ref_obs = sorted_obs[0]
-    print('o1', o1)
-    print('ref_obs', ref_obs)
+
     ### Gets the nodes of the graph and initializes likelihood
     nodes = np.array(list(graph.nodes))
     loglikelihood = {n: -np.inf for n in nodes}
@@ -50,7 +48,7 @@ def ml_estimate(graph, obs_time, sigma, mu, paths, path_lengths,
 
         tmp_lkl = [] # Used to compute mean of likelihoods of same class
         for s in c:
-            if path_lengths[o1][s] < max_dist:
+            if path_lengths[ref_obs][s] < max_dist:
                 ### BFS tree
                 tree_s = likelihood_tree(paths, s, sorted_obs)
                 ### Covariance matrix
