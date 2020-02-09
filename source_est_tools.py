@@ -11,7 +11,7 @@ import operator
 # ---------------------------- MU VECTORS and COV MATRIX
 
 
-def mu_vector_s(paths, s, obs):
+def mu_vector_s(paths, s, obs, ref_obs):
     """compute the mu vector for a candidate s
 
        obs is the ordered list of observers
@@ -20,7 +20,7 @@ def mu_vector_s(paths, s, obs):
     for l in range(1, len(obs)):
         #the shortest path are contained in the bfs tree or at least have the
         #same length by definition of bfs tree
-        v.append(len(paths[obs[l]][s]) - len(paths[obs[0]][s]))
+        v.append(len(paths[obs[l]][s]) - len(paths[ref_obs][s]))
     #Transform the list in a column array (needed for source estimation)
     mu_s = np.zeros((len(obs)-1, 1))
     mu_s[:, 0] = v
@@ -37,7 +37,7 @@ def verif_existant_path(edges, path):
     return all(any(p1==p2 for p1 in edges) for p2 in path_edges)
 
 
-def cov_mat(tree, graph, paths, obs):
+def cov_mat(tree, graph, paths, obs, ref_obs):
     """Compute the covariance matrix of the observed delays.
 
     obs is the ordered set of observers.
@@ -55,10 +55,10 @@ def cov_mat(tree, graph, paths, obs):
     bfs_tree_paths = {}
     undirected_tree = tree.to_undirected()
     for o in obs[1:]:
-        if not(verif_existant_path(list(tree.edges), paths[obs[0]][o])) :
-            bfs_tree_paths[o] = nx.shortest_path(undirected_tree, obs[0], o)
+        if not(verif_existant_path(list(tree.edges), paths[ref_obs[o])) :
+            bfs_tree_paths[o] = nx.shortest_path(undirected_tree, ref_obs, o)
         else:
-            bfs_tree_paths[o] = paths[obs[0]][o]
+            bfs_tree_paths[o] = paths[ref_obs][o]
 
     k = len(obs)
     cov = np.empty([k-1, k-1])

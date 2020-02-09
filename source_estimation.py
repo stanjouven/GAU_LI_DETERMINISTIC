@@ -33,6 +33,7 @@ def ml_estimate(graph, obs_time, sigma, mu, paths, path_lengths,
     sorted_obs = sorted(obs_time.items(), key=operator.itemgetter(1))
     sorted_obs = [x[0] for x in sorted_obs]
     o1 = min(obs_time, key=obs_time.get)
+    ref_obs = sorted_obs[0]
 
     ### Gets the nodes of the graph and initializes likelihood
     nodes = np.array(list(graph.nodes))
@@ -52,13 +53,13 @@ def ml_estimate(graph, obs_time, sigma, mu, paths, path_lengths,
                 ### BFS tree
                 tree_s = likelihood_tree(paths, s, sorted_obs)
                 ### Covariance matrix
-                cov_d_s = tl.cov_mat(tree_s, graph, paths, sorted_obs)
+                cov_d_s = tl.cov_mat(tree_s, graph, paths, sorted_obs, ref_obs)
                 cov_d_s = (sigma**2)*cov_d_s
                 ### Mean vector
-                mu_s = tl.mu_vector_s(paths, s, sorted_obs)
+                mu_s = tl.mu_vector_s(paths, s, sorted_obs, ref_obs)
                 mu_s = mu*mu_s
                 ### Computes log-probability of the source being the real source
-                likelihood, tmp = logLH_source_tree(mu_s, cov_d_s, sorted_obs, obs_time)
+                likelihood, tmp = logLH_source_tree(mu_s, cov_d_s, sorted_obs, obs_time, ref_obs)
                 tmp_lkl.append(likelihood)
 
         ### If the class was not empty
@@ -88,7 +89,7 @@ def posterior_from_logLH(loglikelihood):
             for key, value in loglikelihood.items())
 
 
-def logLH_source_tree(mu_s, cov_d, obs, obs_time):
+def logLH_source_tree(mu_s, cov_d, obs, obs_time, ref_obs):
     """ Returns loglikelihood of node 's' being the source.
     For that, the probability of the observed time is computed in a tree where
     the current candidate is the source/root of the tree.
@@ -105,7 +106,7 @@ def logLH_source_tree(mu_s, cov_d, obs, obs_time):
     ### Loops over all the observers (w/o first one (referential) and last one (computation constraint))
     #   Every time it computes the infection time with respect to the ref obs
     for l in range(1, len(obs)):
-        obs_d[l-1] = obs_time[obs[l]] - obs_time[obs[0]]
+        obs_d[l-1] = obs_time[obs[l]] - obs_time[ref_obs]
 
     ### Computes the log of the gaussian probability of the observed time being possible
     exponent =  - (1/2 * (obs_d - mu_s).T.dot(np.linalg.inv(cov_d)).dot(obs_d -
