@@ -9,6 +9,7 @@ likelihood is a dictionary containing the a posteriori likelihood of every
 node.
 """
 import math
+import random
 import networkx as nx
 import numpy as np
 import GAU_LI_DETERMINISTIC.source_est_tools as tl
