@@ -62,7 +62,7 @@ def ml_estimate(graph, obs_time, sigma, mu, paths, path_lengths,
             mu_s = mu*mu_s
             ### Computes log-probability of the source being the real source
             likelihood, tmp = logLH_source_tree(mu_s, cov_d_s, sorted_obs, obs_time, ref_obs)
-            loglikelihood[s] = np.log(likelihood)
+            loglikelihood[s] = likelihood
 
 
     ### Find the nodes with maximum loglikelihood and return the nodes
