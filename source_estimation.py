@@ -36,6 +36,7 @@ def ml_estimate(graph, obs_time, sigma, mu, paths, path_lengths,
     random.shuffle(sorted_obs)
     ref_obs = sorted_obs[0]
     print('ref obs ', ref_obs)
+    print('sorted obs ', sorted_obs)
     #ref_obs = random.choice(sorted_obs)
 
     ### Gets the nodes of the graph and initializes likelihood
