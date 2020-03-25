@@ -15,6 +15,7 @@ import numpy as np
 import GAU_LI_DETERMINISTIC.source_est_tools as tl
 import operator
 import collections
+import pandas as pd
 
 import scipy.stats as st
 from scipy.misc import logsumexp
@@ -47,7 +48,7 @@ def ml_estimate(graph, obs_time, sigma, mu, paths, path_lengths,
 
     # initializes likelihood
     loglikelihood = {n: -np.inf for n in candidate_nodes}
-
+    i = 0
     for s in candidate_nodes:
         #print('s ', s)
         if path_lengths[ref_obs][s] < max_dist:
@@ -55,6 +56,9 @@ def ml_estimate(graph, obs_time, sigma, mu, paths, path_lengths,
             tree_s = likelihood_tree(paths, s, sorted_obs)
             ### Covariance matrix
             cov_d_s = tl.cov_mat(tree_s, graph, paths, sorted_obs, ref_obs)
+            if i == 0:
+                df = pd.DataFrame(cov_d_s)
+                df_new.to_pickle("cov.pkl")
             #print('cov ', cov_d_s, flush = True)
             #print('sigma**2 ', sigma**2, flush = True)
             cov_d_s = (sigma**2)*cov_d_s
@@ -66,7 +70,7 @@ def ml_estimate(graph, obs_time, sigma, mu, paths, path_lengths,
             ### Computes log-probability of the source being the real source
             likelihood, tmp = logLH_source_tree(mu_s, cov_d_s, sorted_obs, obs_time, ref_obs)
             loglikelihood[s] = likelihood
-
+            i = i + 1
 
     ### Find the nodes with maximum loglikelihood and return the nodes
     # with maximum a posteriori likelihood
