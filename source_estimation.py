@@ -79,6 +79,7 @@ def posterior_from_logLH(loglikelihood):
     Returns a dictionary: node -> posterior probability
     """
     bias = logsumexp(list(loglikelihood.values()))
+    print('loglikelihood ', loglikelihood, flush = True)
     return dict((key, np.exp(value - bias))
             for key, value in loglikelihood.items())
 
