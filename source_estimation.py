@@ -35,6 +35,7 @@ def ml_estimate(graph, obs_time, sigma, mu, paths, path_lengths,
     sorted_obs = [x[0] for x in sorted_obs]
     random.shuffle(sorted_obs)
     ref_obs = sorted_obs[0]
+    print('ref obs ', ref_obs)
     #ref_obs = random.choice(sorted_obs)
 
     ### Gets the nodes of the graph and initializes likelihood
@@ -108,7 +109,8 @@ def logLH_source_tree(mu_s, cov_d, obs, obs_time, ref_obs):
             mu_s))
     print('det ', np.linalg.det(cov_d), flush = True)
     denom = math.sqrt(((2*math.pi)**(len(obs_d)-1))*np.linalg.det(cov_d))
-
+    print('obs_d - mu_s ', obs_d - mu_s)
+    print('denom ', denom)
     return (exponent - np.log(denom))[0,0], obs_d - mu_s
 
 
