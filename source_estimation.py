@@ -50,9 +50,12 @@ def ml_estimate(graph, obs_time, sigma, mu, paths, path_lengths,
             ### Covariance matrix
             cov_d_s = tl.cov_mat(tree_s, graph, paths, sorted_obs, ref_obs)
             print('cov ', cov_d_s, flush = True)
+            print('sigma**2 ', sigma**2, flush = True)
             cov_d_s = (sigma**2)*cov_d_s
             ### Mean vector
             mu_s = tl.mu_vector_s(paths, s, sorted_obs, ref_obs)
+            print('mu ', mu_s)
+            print('mu dist ', mu)
             mu_s = mu*mu_s
             ### Computes log-probability of the source being the real source
             likelihood, tmp = logLH_source_tree(mu_s, cov_d_s, sorted_obs, obs_time, ref_obs)
