@@ -45,7 +45,7 @@ def ml_estimate(graph, obs_time, sigma, mu, paths, path_lengths,
 
     # candidate nodes does not contain observers nodes by assumption
     candidate_nodes = np.array(list(set(nodes) - set(sorted_obs)))
-    for s in candidate_nodes:
+    for s in nodes:
         print('s ', s)
         if path_lengths[ref_obs][s] < max_dist:
             ### BFS tree
