@@ -58,7 +58,7 @@ def ml_estimate(graph, obs_time, sigma, mu, paths, path_lengths,
             cov_d_s = tl.cov_mat(tree_s, graph, paths, sorted_obs, ref_obs)
             if i == 0:
                 df = pd.DataFrame(cov_d_s)
-                df.to_pickle("results/trunc_gaussian_3.0_3.0/ER-model/test_1/cov.pkl")
+                df.to_pickle("results/trunc_gaussian_3.0_1.0/ER-model/test_1/cov.pkl")
             #print('cov ', cov_d_s, flush = True)
             #print('sigma**2 ', sigma**2, flush = True)
             cov_d_s = (sigma**2)*cov_d_s
