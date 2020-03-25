@@ -55,7 +55,7 @@ def ml_estimate(graph, obs_time, sigma, mu, paths, path_lengths,
             tree_s = likelihood_tree(paths, s, sorted_obs)
             ### Covariance matrix
             cov_d_s = tl.cov_mat(tree_s, graph, paths, sorted_obs, ref_obs)
-            print('cov ', cov_d_s, flush = True)
+            #print('cov ', cov_d_s, flush = True)
             #print('sigma**2 ', sigma**2, flush = True)
             cov_d_s = (sigma**2)*cov_d_s
             ### Mean vector
@@ -113,7 +113,7 @@ def logLH_source_tree(mu_s, cov_d, obs, obs_time, ref_obs):
     ### Computes the log of the gaussian probability of the observed time being possible
     exponent =  - (1/2 * (obs_d - mu_s).T.dot(np.linalg.inv(cov_d)).dot(obs_d -
             mu_s))
-    print('det ', np.linalg.det(cov_d), flush = True)
+    #print('det ', np.linalg.det(cov_d), flush = True)
     denom = math.sqrt(((2*math.pi)**(len(obs_d)-1))*np.linalg.det(cov_d))
     #print('obs_d - mu_s ', obs_d - mu_s)
     #print('denom ', denom)
