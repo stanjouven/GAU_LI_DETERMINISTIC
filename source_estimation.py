@@ -45,6 +45,7 @@ def ml_estimate(graph, obs_time, sigma, mu, paths, path_lengths,
     # candidate nodes does not contain observers nodes by assumption
     candidate_nodes = np.array(list(set(nodes) - set(sorted_obs)))
     for s in candidate_nodes:
+        print('s ', s)
         if path_lengths[ref_obs][s] < max_dist:
             ### BFS tree
             tree_s = likelihood_tree(paths, s, sorted_obs)
@@ -60,6 +61,7 @@ def ml_estimate(graph, obs_time, sigma, mu, paths, path_lengths,
             mu_s = mu*mu_s
             ### Computes log-probability of the source being the real source
             likelihood, tmp = logLH_source_tree(mu_s, cov_d_s, sorted_obs, obs_time, ref_obs)
+            loglikelihood[s] = np.log(likelihood)
 
 
     ### Find the nodes with maximum loglikelihood and return the nodes
@@ -111,6 +113,7 @@ def logLH_source_tree(mu_s, cov_d, obs, obs_time, ref_obs):
     denom = math.sqrt(((2*math.pi)**(len(obs_d)-1))*np.linalg.det(cov_d))
     print('obs_d - mu_s ', obs_d - mu_s)
     print('denom ', denom)
+    print('exponent ', exponent)
     return (exponent - np.log(denom))[0,0], obs_d - mu_s
 
 
