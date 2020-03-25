@@ -43,10 +43,8 @@ def ml_estimate(graph, obs_time, sigma, mu, paths, path_lengths,
 
     # candidate nodes does not contain observers nodes by assumption
     candidate_nodes = np.array(list(set(nodes) - set(sorted_obs)))
-    print('ref obs', ref_obs, flush = True)
     for s in candidate_nodes:
         if path_lengths[ref_obs][s] < max_dist:
-            print('s', s, flush = True)
             ### BFS tree
             tree_s = likelihood_tree(paths, s, sorted_obs)
             ### Covariance matrix
@@ -55,7 +53,6 @@ def ml_estimate(graph, obs_time, sigma, mu, paths, path_lengths,
             cov_d_s = (sigma**2)*cov_d_s
             ### Mean vector
             mu_s = tl.mu_vector_s(paths, s, sorted_obs, ref_obs)
-            print('mu ', mu_s, flush = True)
             mu_s = mu*mu_s
             ### Computes log-probability of the source being the real source
             likelihood, tmp = logLH_source_tree(mu_s, cov_d_s, sorted_obs, obs_time, ref_obs)
