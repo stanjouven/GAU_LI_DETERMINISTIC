@@ -22,6 +22,8 @@ def gau_li_deterministic(graph, obs_time, distribution) :
     ### Run the estimation
     s_est, scores = se.ml_estimate(graph, obs_time, sigma, mu, paths, path_lengths)
 
+    print('path_length ', path_lengths)
+
     return (s_est, scores)
 
 
