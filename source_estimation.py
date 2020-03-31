@@ -57,15 +57,12 @@ def ml_estimate(graph, obs_time, sigma, mu, paths, path_lengths,
             tree_s = likelihood_tree(paths, s, sorted_obs)
             ### Covariance matrix
             cov_d_s = tl.cov_mat(tree_s, graph, paths, sorted_obs, ref_obs)
-            if i == 0:
-                df = pd.DataFrame(cov_d_s)
-                df.to_pickle("results/trunc_gaussian_3.0_1.0/ER-model/test_1/cov_runtime_error.pkl")
             #print('cov ', cov_d_s, flush = True)
             #print('sigma**2 ', sigma**2, flush = True)
             cov_d_s = (sigma**2)*cov_d_s
-            if np.linalg.det(cov_d_s) > 500**(200):
-                print(np.linalg.det(cov_d_s), flush = True)
-                sys.exit(0)
+            df = pd.DataFrame(cov_d_s)
+            df.to_pickle("results/trunc_gaussian_3.0_1.0/ER-model/test_1/cov_runtime_error.pkl")
+            print(np.linalg.det(cov_d_s), flush = True)
             ### Mean vector
             mu_s = tl.mu_vector_s(paths, s, sorted_obs, ref_obs)
             #print('mu ', mu_s)
