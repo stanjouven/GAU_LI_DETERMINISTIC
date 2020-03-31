@@ -118,13 +118,13 @@ def logLH_source_tree(mu_s, cov_d, obs, obs_time, ref_obs):
     exponent =  - (1/2 * (obs_d - mu_s).T.dot(np.linalg.inv(cov_d)).dot(obs_d -
             mu_s))
     #print('det ', np.linalg.det(cov_d), flush = True)
-    print('1 ', len(obs_d)-1, flush = True)
-    print('2 ', math.sqrt(((2*math.pi)**(len(obs_d)-1))*np.linalg.det(cov_d)), flush = True)
-    denom = math.sqrt(((2*math.pi)**(len(obs_d)-1))*np.linalg.det(cov_d))
+    #print('2 ', math.sqrt(((2*math.pi)**(len(obs_d)-1))*np.linalg.det(cov_d)), flush = True)
+    #denom = math.sqrt(((2*math.pi)**(len(obs_d)-1))*np.linalg.det(cov_d))
+    denom = len(obs_d)*np.log(2*math.pi) + len(obs)*log(np.linalg.det(cov_d))
     #print('obs_d - mu_s ', obs_d - mu_s)
     #print('denom ', denom)
     #print('exponent ', exponent)
-    return (exponent - np.log(denom))[0,0], obs_d - mu_s
+    return (exponent - denom)[0,0], obs_d - mu_s
 
 
 def likelihood_tree(paths, s, obs):
