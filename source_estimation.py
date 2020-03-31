@@ -60,7 +60,7 @@ def ml_estimate(graph, obs_time, sigma, mu, paths, path_lengths,
             if i == 0:
                 df = pd.DataFrame(cov_d_s)
                 df.to_pickle("results/trunc_gaussian_3.0_1.0/ER-model/test_1/cov_runtime_error.pkl")
-            if np.linalg.det(cov_d) > 500**(200):
+            if np.linalg.det(cov_d_s) > 500**(200):
                 sys.exit(0)
             #print('cov ', cov_d_s, flush = True)
             #print('sigma**2 ', sigma**2, flush = True)
