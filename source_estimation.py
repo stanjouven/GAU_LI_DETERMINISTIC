@@ -64,7 +64,7 @@ def ml_estimate(graph, obs_time, sigma, mu, paths, path_lengths,
             #print('sigma**2 ', sigma**2, flush = True)
             cov_d_s = (sigma**2)*cov_d_s
             if np.linalg.det(cov_d_s) > 500**(200):
-                print(np.linalg.det(cov_d_s))
+                print(np.linalg.det(cov_d_s), flush = True)
                 sys.exit(0)
             ### Mean vector
             mu_s = tl.mu_vector_s(paths, s, sorted_obs, ref_obs)
