@@ -49,7 +49,6 @@ def ml_estimate(graph, obs_time, sigma, mu, paths, path_lengths,
 
     # initializes likelihood
     loglikelihood = {n: -np.inf for n in candidate_nodes}
-    i = 0
     for s in candidate_nodes:
         #print('s ', s)
         if path_lengths[ref_obs][s] < max_dist:
@@ -60,9 +59,6 @@ def ml_estimate(graph, obs_time, sigma, mu, paths, path_lengths,
             #print('cov ', cov_d_s, flush = True)
             #print('sigma**2 ', sigma**2, flush = True)
             cov_d_s = (sigma**2)*cov_d_s
-            df = pd.DataFrame(cov_d_s)
-            df.to_pickle("results/trunc_gaussian_3.0_1.0/ER-model/test_1/cov_runtime_error.pkl")
-            print(np.linalg.det(cov_d_s), flush = True)
             ### Mean vector
             mu_s = tl.mu_vector_s(paths, s, sorted_obs, ref_obs)
             #print('mu ', mu_s)
