@@ -116,7 +116,7 @@ def logLH_source_tree(mu_s, cov_d, obs, obs_time, ref_obs):
     #print('det ', np.linalg.det(cov_d), flush = True)
     #print('2 ', math.sqrt(((2*math.pi)**(len(obs_d)-1))*np.linalg.det(cov_d)), flush = True)
     #denom = math.sqrt(((2*math.pi)**(len(obs_d)-1))*np.linalg.det(cov_d))
-    denom = len(obs_d)*np.log(2*math.pi) + len(obs)*np.log(np.linalg.det(cov_d))
+    denom = len(obs_d)*np.log(math.sqrt(2*math.pi)) + np.log(np.linalg.det(cov_d))
     #print('obs_d - mu_s ', obs_d - mu_s)
     #print('denom ', denom)
     #print('exponent ', exponent)
