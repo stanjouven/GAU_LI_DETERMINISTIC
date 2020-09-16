@@ -37,37 +37,28 @@ def ml_estimate(graph, obs_time, sigma, mu, paths, path_lengths,
     ref_obs = sorted_obs[0]
     #ref_obs = random.choice(sorted_obs)
 
-    ### Gets the nodes of the graph and initializes likelihood
+    ### Gets the nodes of the graph
     nodes = np.array(list(graph.nodes))
-    loglikelihood = {n: -np.inf for n in nodes}
 
-    ### Computes classes of nodes with same position with respect to all observers
-    classes = tl.classes(path_lengths, sorted_obs)
+    # candidate nodes does not contain observers nodes by assumption
+    candidate_nodes = np.array(list(set(nodes) - set(sorted_obs)))
+    
+    # initializes likelihood
+    loglikelihood = {n: -np.inf for n in candidate_nodes}
 
-    ### Iteration over all nodes per class
-    #   nodes from same class will be attributed the average of their likelihoods
-    #   likelihood
-    for c in classes:
-
-        tmp_lkl = [] # Used to compute mean of likelihoods of same class
-        for s in c:
-            if path_lengths[ref_obs][s] < max_dist:
-                ### BFS tree
-                tree_s = likelihood_tree(paths, s, sorted_obs)
-                ### Covariance matrix
-                cov_d_s = tl.cov_mat(tree_s, graph, paths, sorted_obs, ref_obs)
-                cov_d_s = (sigma**2)*cov_d_s
-                ### Mean vector
-                mu_s = tl.mu_vector_s(paths, s, sorted_obs, ref_obs)
-                mu_s = mu*mu_s
-                ### Computes log-probability of the source being the real source
-                likelihood, tmp = logLH_source_tree(mu_s, cov_d_s, sorted_obs, obs_time, ref_obs)
-                tmp_lkl.append(likelihood)
-
-        ### If the class was not empty
-        if len(tmp_lkl)>0:
-            for s in c:
-                loglikelihood[s] = tmp_lkl[0]
+    for s in candidate_nodes:
+        if path_lengths[ref_obs][s] < max_dist:
+            ### BFS tree
+            tree_s = likelihood_tree(paths, s, sorted_obs)
+            ### Covariance matrix
+            cov_d_s = tl.cov_mat(tree_s, graph, paths, sorted_obs, ref_obs)
+            cov_d_s = (sigma**2)*cov_d_s
+            ### Mean vector
+            mu_s = tl.mu_vector_s(paths, s, sorted_obs, ref_obs)
+            mu_s = mu*mu_s
+            ### Computes log-probability of the source being the real source
+            likelihood, tmp = logLH_source_tree(mu_s, cov_d_s, sorted_obs, obs_time, ref_obs)
+            loglikelihood[s] = likelihood
 
     ### Find the nodes with maximum loglikelihood and return the nodes
     # with maximum a posteriori likelihood
@@ -113,10 +104,9 @@ def logLH_source_tree(mu_s, cov_d, obs, obs_time, ref_obs):
     ### Computes the log of the gaussian probability of the observed time being possible
     exponent =  - (1/2 * (obs_d - mu_s).T.dot(np.linalg.inv(cov_d)).dot(obs_d -
             mu_s))
-    denom = math.sqrt(((2*math.pi)**(len(obs_d)-1))*np.linalg.det(cov_d))
+    denom = len(obs_d)*np.log(math.sqrt(2*math.pi)) + np.log(np.linalg.det(cov_d))
 
-    return (exponent - np.log(denom))[0,0], obs_d - mu_s
-
+    return (exponent - denom)[0,0], obs_d - mu_s
 
 def likelihood_tree(paths, s, obs):
     """Creates a BFS tree with only observers at its leaves.
