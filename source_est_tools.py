@@ -2,7 +2,6 @@
 
 import collections
 import itertools
-#import matplotlib.pyplot as plt
 import networkx as nx
 import numpy as np
 import random
@@ -69,7 +68,7 @@ def cov_mat(tree, graph, paths, obs, ref_obs):
             else:
                 path_row = bfs_tree_paths[obs[row+1]]
                 path_col = bfs_tree_paths[obs[col+1]]
-                common_nodes = list(filter(lambda x: x in path_col, path_row)) # does it respect some order
+                common_nodes = list(filter(lambda x: x in path_col, path_row)) 
                 #p = nx.shortest_path(tree, common_nodes[0],common_nodes[-1]) # how to ensure that the path includes all common nodes ?
                 cov[row, col] = len(common_nodes)-1
     return cov
